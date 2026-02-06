@@ -29,16 +29,17 @@ jobs:
             zlib1g-dev \
             libgstreamer1.0-dev \
             gstreamer1.0-plugins-base \
-            gstreamer1.0-plugins-good
-          pip3 install --user cython
-
-      - name: Install Buildozer
-        run: |
-          pip3 install --user buildozer
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+            gstreamer1.0-plugins-good \
+            openjdk-17-jdk \
+            zip \
+            unzip
+          pip3 install --user cython buildozer
 
       - name: Build with Buildozer
-        run: buildozer android debug
+        run: |
+          export PATH=$PATH:$HOME/.local/bin
+          yes | buildozer android debug
+        continue-on-error: false
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
