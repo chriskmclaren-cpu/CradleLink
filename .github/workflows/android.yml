@@ -40,14 +40,14 @@ jobs:
             libncursesw5 \
             libffi-dev \
             libssl-dev
-          pip3 install --user cython==0.29.33 buildozer
+          # Install build tools directly to pre-configure the environment
+          pip3 install --user cython==0.29.33 buildozer python-for-android
 
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          # Clean old build artifacts to prevent corruption
-          buildozer android clean
-          # Start the full debug build
+          # We skip 'buildozer android clean' here because on a fresh runner 
+          # it crashes if the directories don't exist yet.
           buildozer android debug
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSE: "True"
