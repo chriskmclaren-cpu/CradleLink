@@ -6,14 +6,12 @@ source.dir = .
 source.include_exts = py,png,json
 version = 1.1.0
 
-# Core requirements for the Mobile Nerve
-requirements = python3,kivy,requests,urllib3,certifi,charset-normalizer,idna
+requirements = python3,kivy,requests,urllib3,certifi
 
 orientation = portrait
 android.permissions = INTERNET
 icon.filename = Bloodfang.png
 
-# Android Build Settings
 android.api = 33
 android.minapi = 21
 android.ndk = 25b
