@@ -38,8 +38,10 @@ jobs:
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          yes | buildozer android debug
-        continue-on-error: false
+          buildozer android debug || buildozer android debug
+        env:
+          BUILDOZER_ALLOW_KIVY_DEVELOPER_CONTROLS: 1
+          APP_ANDROID_ACCEPT_SDK_LICENSE: "True"
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
