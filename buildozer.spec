@@ -1,0 +1,25 @@
+[app]
+title = NexusLink
+package.name = nexuslink
+package.domain = lupine.studio
+source.dir = .
+source.include_exts = py,png,json
+version = 1.1.0
+
+# Core requirements for the Mobile Nerve
+requirements = python3,kivy,requests,urllib3,certifi,charset-normalizer,idna
+
+orientation = portrait
+android.permissions = INTERNET
+icon.filename = Bloodfang.png
+
+# Android Build Settings
+android.api = 33
+android.minapi = 21
+android.ndk = 25b
+android.archs = arm64-v8a, armeabi-v7a
+android.accept_sdk_license = True
+
+[buildozer]
+log_level = 2
+warn_on_root = 1
