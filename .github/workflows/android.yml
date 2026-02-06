@@ -5,17 +5,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         with:
-          command: buildozer -v android debug
           buildozer_version: stable
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: NexusLink-Package
-          path: bin/*.apk
+          command: buildozer android debug
