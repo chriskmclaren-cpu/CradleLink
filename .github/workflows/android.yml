@@ -23,17 +23,9 @@ jobs:
       - name: Build with Buildozer
         run: |
           export PATH=$PATH:$HOME/.local/bin
-          # Pipe output to a file so we can read it after failure
-          buildozer android debug | tee build_output.log
+          buildozer android debug
         env:
           APP_ANDROID_ACCEPT_SDK_LICENSE: "True"
-
-      - name: Upload Logs on Failure
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: full-build-log
-          path: build_output.log
 
       - name: Upload APK on Success
         if: success()
