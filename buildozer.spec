@@ -3,15 +3,19 @@ title = NexusLink
 package.name = nexuslink
 package.domain = lupine.studio
 source.dir = .
-source.include_exts = py,png,json,kv
+
+# UPDATE: Added "PNG" (caps) just in case the extension is hiding something.
+source.include_exts = py,png,json,kv,jpg,PNG
+
 version = 1.2.0
 
-# ACTION TAKEN: Removed 'requests', 'openssl', etc.
-# This prevents the compiler from crashing on heavy libraries.
+# REQUIREMENTS: Lightweight mode (No heavy libraries that cause crashes)
 requirements = python3,kivy
 
 orientation = portrait
 android.permissions = INTERNET
+
+# ICON: Matches your screenshot exactly
 icon.filename = Bloodfang.png
 
 android.api = 33
