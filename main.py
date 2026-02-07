@@ -1,6 +1,4 @@
 import json
-import threading
-import requests
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.textinput import TextInput
@@ -8,10 +6,11 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.clock import Clock
+from kivy.network.urlrequest import UrlRequest # Native Kivy Network Tool
 from kivy.core.window import Window
 
 # --- CONFIGURATION ---
-# This serves as a default. You can edit it in the app's text box.
+# Default IP. You can change this in the app.
 DEFAULT_SPIRE_URL = "http://192.168.1.XX:8000/mobile_bridge" 
 
 class NexusLink(App):
@@ -63,18 +62,22 @@ class NexusLink(App):
         self.update_history(f"[b]{user}:[/b] {text}")
         self.msg_input.text = ""
         
-        # Send to Spire in background
-        threading.Thread(target=self.post_to_spire, args=(url, user, text)).start()
+        # Send to Spire using Native Kivy Request (Async)
+        headers = {'Content-type': 'application/json'}
+        body = json.dumps({"user": user, "text": text})
+        
+        UrlRequest(url, req_body=body, req_headers=headers, 
+                  on_success=self.on_success, on_failure=self.on_failure, on_error=self.on_error)
 
-    def post_to_spire(self, url, user, text):
-        try:
-            payload = {"user": user, "text": text}
-            headers = {"Content-Type": "application/json"}
-            requests.post(url, json=payload, headers=headers, timeout=5)
-            Clock.schedule_once(lambda dt: self.set_status("LINK ESTABLISHED", (0, 1, 0, 1)))
-        except Exception as e:
-            Clock.schedule_once(lambda dt: self.set_status("CONNECTION FAILED", (1, 0, 0, 1)))
-            Clock.schedule_once(lambda dt: self.update_history(f"[color=ff0000]Error: {str(e)}[/color]"))
+    def on_success(self, req, result):
+        Clock.schedule_once(lambda dt: self.set_status("LINK ESTABLISHED", (0, 1, 0, 1)))
+
+    def on_failure(self, req, result):
+        Clock.schedule_once(lambda dt: self.set_status("CONNECTION FAILED (400/500)", (1, 0, 0, 1)))
+
+    def on_error(self, req, error):
+        Clock.schedule_once(lambda dt: self.set_status("CONNECTION ERROR (Check IP)", (1, 0, 0, 1)))
+        Clock.schedule_once(lambda dt: self.update_history(f"[color=ff0000]Error: {str(error)}[/color]"))
 
     def set_status(self, text, color):
         self.status_label.text = text
