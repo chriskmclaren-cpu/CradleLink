@@ -6,17 +6,17 @@ from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.scrollview import ScrollView
 from kivy.clock import Clock
-from kivy.network.urlrequest import UrlRequest # Native Kivy Network Tool
+from kivy.network.urlrequest import UrlRequest
 from kivy.core.window import Window
 
 # --- CONFIGURATION ---
-# Default IP. You can change this in the app.
 DEFAULT_SPIRE_URL = "http://192.168.1.XX:8000/mobile_bridge" 
 
 class NexusLink(App):
     def build(self):
+        # Ensure this image exists in your repo, or comment this line out
         self.icon = "Bloodfang.png" 
-        Window.clearcolor = (0.05, 0.05, 0.05, 1) # Dark Background
+        Window.clearcolor = (0.05, 0.05, 0.05, 1)
         
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
         
@@ -62,7 +62,7 @@ class NexusLink(App):
         self.update_history(f"[b]{user}:[/b] {text}")
         self.msg_input.text = ""
         
-        # Send to Spire using Native Kivy Request (Async)
+        # Send to Spire using Native Kivy Request
         headers = {'Content-type': 'application/json'}
         body = json.dumps({"user": user, "text": text})
         
