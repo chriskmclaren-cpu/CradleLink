@@ -4,10 +4,11 @@ package.name = nexuslink
 package.domain = lupine.studio
 source.dir = .
 source.include_exts = py,png,json,kv
-version = 1.1.0
+version = 1.2.0
 
-# FIXED: Added openssl (critical for connection) and requests dependencies
-requirements = python3,kivy,requests,urllib3,certifi,charset-normalizer,idna,openssl
+# ACTION TAKEN: Removed 'requests', 'openssl', etc.
+# This prevents the compiler from crashing on heavy libraries.
+requirements = python3,kivy
 
 orientation = portrait
 android.permissions = INTERNET
