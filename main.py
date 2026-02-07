@@ -14,8 +14,8 @@ DEFAULT_SPIRE_URL = "http://192.168.1.XX:8000/mobile_bridge"
 
 class NexusLink(App):
     def build(self):
-        # Ensure this image exists in your repo, or comment this line out
-        self.icon = "Bloodfang.png" 
+        # MATCHING YOUR FILE EXACTLY
+        self.icon = "Bloodfang.png"
         Window.clearcolor = (0.05, 0.05, 0.05, 1)
         
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
@@ -58,11 +58,9 @@ class NexusLink(App):
         
         if not text: return
         
-        # Update UI instantly
         self.update_history(f"[b]{user}:[/b] {text}")
         self.msg_input.text = ""
         
-        # Send to Spire using Native Kivy Request
         headers = {'Content-type': 'application/json'}
         body = json.dumps({"user": user, "text": text})
         
